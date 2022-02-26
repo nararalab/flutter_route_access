@@ -11,15 +11,25 @@
 ```dart
 final CounterCubit _counterCubit = CounterCubit();
 
-routes: {
-'/': (context) => BlocProvider.value(
+onGenerateRoute: (RouteSettings settings) {
+switch (settings.name) {
+    case '/':
+    return MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
         value: _counterCubit,
         child: const MyHomePage(),
-    ),
-'/counter': (context) => BlocProvider.value(
+        ),
+    );
+    case '/counter':
+    return MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
         value: _counterCubit,
         child: const ViewCounter(),
-    ),
+        ),
+    );
+    default:
+    return null;
+}
 },
 
 @override

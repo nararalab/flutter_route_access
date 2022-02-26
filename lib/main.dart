@@ -26,15 +26,25 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child: const MyHomePage(),
-            ),
-        '/counter': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child: const ViewCounter(),
-            ),
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: _counterCubit,
+                child: const MyHomePage(),
+              ),
+            );
+          case '/counter':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: _counterCubit,
+                child: const ViewCounter(),
+              ),
+            );
+          default:
+            return null;
+        }
       },
     );
   }
@@ -60,7 +70,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  '/count',
+                  '/counter',
                 );
               },
               child: const Text(
