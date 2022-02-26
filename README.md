@@ -1,10 +1,10 @@
 # flutter_route_access
 
-플루터 블록 라우터 엑세스 (Named Route Access)
+플루터 블록 라우터 엑세스 (Generate Route Access)
 
 ## Getting Started
 
-이름지정된 라우트에 BlocProvider.value 사용
+onGenerateRoute 이름지정된 라우트에 BlocProvider.value 사용
 
 ### BlocProvider
 
