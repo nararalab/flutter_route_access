@@ -2,7 +2,7 @@ part of 'counter_cubit.dart';
 
 class CounterState extends Equatable {
   final int counter;
-  CounterState({
+  const CounterState({
     required this.counter,
   });
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubits/counter/counter_cubit.dart';
+import 'view_counter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '블록컨텍스트',
+      title: '익명액세스',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: BlocProvider<CounterCubit>(
+        create: (context) => CounterCubit(),
+        child: const MyHomePage(),
+      ),
     );
   }
 }
@@ -30,28 +34,37 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BlocProvider<CounterCubit>(
-          create: (context) => CounterCubit(),
-          child: Builder(
-            builder: (context) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${BlocProvider.of<CounterCubit>(context, listen: true).state.counter}',
-                  style: const TextStyle(fontSize: 52.0),
-                ),
-                ElevatedButton(
-                  child: const Text(
-                    '카운트증가',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                ),
-              ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) {
+                    return BlocProvider.value(
+                      value: context.read<CounterCubit>(),
+                      child: const ViewCounter(),
+                    );
+                  }),
+                );
+              },
+              child: const Text(
+                '뷰카운터화면으로이동',
+                style: TextStyle(fontSize: 20.0),
+              ),
             ),
-          ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<CounterCubit>(context).increment();
+              },
+              child: const Text(
+                '카운터증가',
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+          ],
         ),
       ),
     );
