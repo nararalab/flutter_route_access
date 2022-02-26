@@ -1,16 +1,32 @@
 # flutter_route_access
 
-플루터 블록 라우터 엑세스 (Anonymous Route Access)
+플루터 블록 라우터 엑세스 (Named Route Access)
 
 ## Getting Started
+
+이름지정된 라우트에 BlocProvider.value 사용
 
 ### BlocProvider
 
 ```dart
-return BlocProvider.value(
-    value: context.read<CounterCubit>(),
-    child: const ViewCounter(),
-);
+final CounterCubit _counterCubit = CounterCubit();
+
+routes: {
+'/': (context) => BlocProvider.value(
+        value: _counterCubit,
+        child: const MyHomePage(),
+    ),
+'/counter': (context) => BlocProvider.value(
+        value: _counterCubit,
+        child: const ViewCounter(),
+    ),
+},
+
+@override
+void dispose() {
+_counterCubit.close();
+super.dispose();
+}
 
 BlocProvider.of<CounterCubit>(context).increment();
 ```
