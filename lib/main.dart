@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  '/count',
+                  '/counter',
                 );
               },
               child: const Text(
